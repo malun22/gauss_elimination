@@ -88,19 +88,6 @@ class GaussElimination:
 
         return matrix, right_side
 
-    def not_working_forward_elimination(self, matrix: np.ndarray, right_side: np.ndarray) -> Union[np.ndarray, np.ndarray]:
-        n = len(matrix[0]) - 1
-
-        for k in range(n - 1):
-            for i in range(k + 1, n):
-                mik = matrix[i][k] / matrix[k][k]
-                for j in range(k + 1, n):
-                    matrix[i][j] = matrix[i][j] - mik * matrix[k][j]
-
-                right_side[i] -= mik * right_side[k]
-
-        return matrix, right_side
-
     def back_substitution(
         self,
         matrix: np.ndarray,
@@ -118,25 +105,5 @@ class GaussElimination:
                 temp -= matrix[i][j] * x[j]
 
             x[i] = temp / matrix[i][i]
-
-        return x
-
-    def not_working_back_substitution(self, matrix: np.ndarray, right_side: np.ndarray) -> np.ndarray:
-        n = len(matrix[0]) - 1
-        r = len(matrix) - 1
-
-        # Create solution vector
-        x = np.zeros(n + 1)
-
-        x[n] = matrix[r][n] / \
-            matrix[r][n]
-
-        for i in range(r - 1, -1, -1):
-            x[i] = matrix[i][r]
-
-            for j in range(i + 1, r):
-                x[i] = x[i] - matrix[i][j] * x[j]
-
-            x[i] = x[i] / matrix[i][i]
 
         return x
