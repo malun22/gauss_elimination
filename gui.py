@@ -16,7 +16,9 @@ class GUI:
     MAX_ROWS = 10
 
     current_matrix = [[3, 0, 1], [1, 2, 0], [0, 1, 1]]
+    current_matrix = [[-3, -33, -1], [0, 0, 2], [-2, 0, -2]]
     current_solutions = [5] * len(current_matrix)
+    current_solutions = [-38, -11, -3]
 
     current_rows = len(current_matrix)
 
