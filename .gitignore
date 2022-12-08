@@ -1,6 +1,7 @@
 # Project
-.Figures.pptx
-.Report.docs
+/Figures.pptx
+/Report.docx
+.Literature/
 
 
 .vscode/*
