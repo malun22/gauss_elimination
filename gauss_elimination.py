@@ -32,6 +32,14 @@ class GaussElimination:
     def right_side(self, right_side: List[float]):
         self._right_side = right_side
 
+    @property
+    def n(self):
+        return self._n
+
+    @n.setter
+    def n(self, n: int):
+        self._n = n
+
     def solve(self, algorithm: str = "forward_elimination"):
         if algorithm == "forward_elimination":
             res = self.forward_elimination_back_substitution(
@@ -74,12 +82,38 @@ class GaussElimination:
 
         return x
 
+    def pivoting(self, matrix: np.ndarray, right_side: np.ndarray):
+        pass
+
+    def swap_rows(
+        self,
+        matrix: np.ndarray,
+        right_side: np.ndarray,
+        i: int, j: int
+    ) -> Union[np.ndarray, np.ndarray]:
+        matrix[[i, j]] = matrix[[j, i]]
+        right_side[[i, j]] = right_side[[j, i]]
+
+        return matrix, right_side
+
     def forward_elimination(
         self,
         matrix: np.ndarray,
         right_side: np.ndarray
     ) -> Union[np.ndarray, np.ndarray]:
         for i in range(self._n - 1):
+            if matrix[i][i] == 0.0:
+                # Pivoting
+                for j in range(i + 1, self._n):
+                    if matrix[j][i] == 0.0 and j < self._n:
+                        continue
+                    elif matrix[j][i] == 0.0 and j == self._n:
+                        raise ValueError("Divide by zero detected!")
+                    else:
+                        matrix, right_side = self.swap_rows(
+                            matrix, right_side, i, j)
+                        break
+
             for j in range(i + 1, self._n):
                 m = matrix[j][i] / matrix[i][i]
                 right_side[j] -= m * right_side[i]
